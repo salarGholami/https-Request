@@ -1,7 +1,8 @@
-import style from "./newComment.module.css";
+import style from "./newComment.module.css"; 
+
 const NewComment = () => {
   return (
-    <div className={style.newComponent}>
+    <div className={style.newComment}>
       <div>
         <label>name</label>
         <input type="text" />
