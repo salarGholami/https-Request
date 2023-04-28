@@ -7,33 +7,46 @@ import axios from "axios";
 import { useState } from "react";
 
 const Discussion = () => {
-
   const [comments, setComments] = useState(null);
+  const [selectId, setSelectId] = useState(null);
 
   useEffect(() => {
-    axios
-      .get("https://jsonplaceholder.typicode.com/comments")
-      .then((response) => {
-        setComments(response.data.slice(0, 4));
-      })
-      .catch((error) => {
+    const getComment = async () => {
+      try {
+        const { data } = await axios.get(
+          "https://jsonplaceholder.typicode.com/comments"
+        );
+        setComments(data.slice(0, 4));
+      } catch (error) {
         console.log(error);
-      });
+      }
+    };
+    getComment();
   }, []);
 
-  return (  
+  const seletCommentHandler = (id) => {
+    setSelectId(id);
+  };
+
+  return (
     <main>
       <section className={style.section}>
         {comments ? (
           comments.map((c) => (
-            <Comment key={c.id} name={c.name} email={c.email} body={c.body} />
+            <Comment
+              key={c.id}
+              name={c.name}
+              email={c.email}
+              body={c.body}
+              onClick={() => seletCommentHandler(c.id)}
+            />
           ))
         ) : (
           <p>loading...</p>
         )}
       </section>
       <section className={style.section}>
-        <FullComment />
+        <FullComment commentId={selectId} />
       </section>
       <section className={style.section}>
         <NewComment />

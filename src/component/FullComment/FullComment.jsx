@@ -1,6 +1,6 @@
 import style from "./fullComment.module.css";
 
-const FullComment = () => {
+const FullComment = ({commentId}) => {
   return (
     <div className={style.fullComment}>
       <p>name</p>
