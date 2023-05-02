@@ -3,18 +3,14 @@ import style from "./newComment.module.css";
 import axios from "axios";
 
 const NewComment = () => {
-  const [comments, setComments] = useState({ name: "", email: "", content: "" });
+  const [comments, setComments] = useState({
+    name: "",
+    email: "",
+    content: "",
+  });
 
-  const nameHandler = (e) => {
-    setComments({ ...comments, name: e.target.value });
-  };
-
-  const emailHandler = (e) => {
-    setComments({ ...comments, email: e.target.value });
-  };
-
-  const contentHandler = (e) => {
-    setComments({ ...comments, content: e.target.value });
+  const changeHandler = (e) => {
+    setComments({ ...comments, [e.target.name]: e.target.value });
   };
 
   const postCommentHandler = () => {
@@ -32,15 +28,15 @@ const NewComment = () => {
       <h2>Add a new comments</h2>
       <div className={style.formControl}>
         <label>name :</label>
-        <input type="text" onChange={nameHandler} />
+        <input type="text" onChange={changeHandler} name="name" />
       </div>
       <div className={style.formControl}>
         <label>email : </label>
-        <input type="text" onChange={emailHandler} />
+        <input type="text" onChange={changeHandler} name="email" />
       </div>
       <div className={style.formControl}>
         <label>body : </label>
-        <textarea type="text" onChange={contentHandler} />
+        <textarea type="text" onChange={changeHandler} name="content" />
       </div>
       <button onClick={postCommentHandler}>add new Comment</button>
     </div>
