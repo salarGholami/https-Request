@@ -5,7 +5,7 @@
   align-items: center;
   justify-content: center;
   width: 600px;
-  height: 150px;
+  height: 200px;
   color: aliceblue;
   border-radius: 5px;
   margin: 20px 0;
@@ -20,4 +20,20 @@
 
 p {
   margin-bottom: 0.5rem;
+}
+
+.buttonDelete {
+  padding: 0.5rem;
+  margin-top: 0.25rem;
+  margin-bottom: 0.5rem;
+  margin-left: 45px;
+  display: flex;
+  align-items: center;
+  text-align: center;
+  justify-content: center;
+  color: #ff006f;
+  background-color: transparent;
+  outline: none;
+  appearance: none;
+  border: 1px solid #ff006f;
 }
