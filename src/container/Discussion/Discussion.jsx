@@ -13,10 +13,8 @@ const Discussion = () => {
   useEffect(() => {
     const getComment = async () => {
       try {
-        const { data } = await axios.get(
-          "https://jsonplaceholder.typicode.com/comments"
-        );
-        setComments(data.slice(0, 4));
+        const { data } = await axios.get("http://localhost:3001/comments");
+        setComments(data);
       } catch (error) {
         console.log(error);
       }
@@ -49,7 +47,7 @@ const Discussion = () => {
         <FullComment commentId={selectId} />
       </section>
       <section className={style.section}>
-        <NewComment />
+        <NewComment setComments={setComments} />
       </section>
     </main>
   );
