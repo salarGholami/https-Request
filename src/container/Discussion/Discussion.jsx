@@ -9,6 +9,7 @@ import { useState } from "react";
 const Discussion = () => {
   const [comments, setComments] = useState(null);
   const [selectId, setSelectId] = useState(null);
+  const [error, setError] = useState(false);
 
   useEffect(() => {
     const getComment = async () => {
@@ -16,7 +17,7 @@ const Discussion = () => {
         const { data } = await axios.get("http://localhost:3001/comments");
         setComments(data);
       } catch (error) {
-        console.log(error);
+        setError(true);
       }
     };
     getComment();
@@ -26,23 +27,29 @@ const Discussion = () => {
     setSelectId(id);
   };
 
+  const renderComments = () => {
+    let renderValue = <p>Loading....</p>;
+
+    if (error) renderValue = <p>data is not fetching</p>;
+
+    if (comments && !error) {
+      renderValue = comments.map((c) => (
+        <Comment
+          key={c.id}
+          name={c.name}
+          email={c.email}
+          body={c.body}
+          onClick={() => seletCommentHandler(c.id)}
+        />
+      ));
+    }
+
+    return renderValue;
+  };
+
   return (
     <main>
-      <section className={style.section}>
-        {comments ? (
-          comments.map((c) => (
-            <Comment
-              key={c.id}
-              name={c.name}
-              email={c.email}
-              body={c.body}
-              onClick={() => seletCommentHandler(c.id)}
-            />
-          ))
-        ) : (
-          <p>loading...</p>
-        )}
-      </section>
+      <section className={style.section}>{renderComments()}</section>
       <section className={style.section}>
         <FullComment commentId={selectId} />
       </section>
