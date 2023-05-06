@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import style from "./fullComment.module.css";
 import axios from "axios";
 
-const FullComment = ({ commentId }) => {
+const FullComment = ({ commentId, setComments }) => {
   const [comment, setComment] = useState(null);
 
   useEffect(() => {
@@ -14,11 +14,12 @@ const FullComment = ({ commentId }) => {
     }
   }, [commentId]);
 
-  const deleteHandler = () => {
-    axios
-      .delete(`http://localhost:3001/comments/${commentId}`)
-      .then((res) => console.log(res.data))
-      .catch((err) => console.log(err));
+  const deleteHandler = async () => {
+    try {
+      await axios.delete(`http://localhost:3001/comments/${commentId}`);
+      const { data } = await axios.get("http://localhost:3001/comments");
+      setComments(data);
+    } catch (error) {}
   };
 
   let commentDetial = <p>please select a comment</p>;

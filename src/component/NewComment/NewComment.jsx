@@ -2,7 +2,7 @@ import { useState } from "react";
 import style from "./newComment.module.css";
 import axios from "axios";
 
-const NewComment = ({setComments}) => {
+const NewComment = ({ setComments }) => {
   const [comment, setComment] = useState({
     name: "",
     email: "",
@@ -13,15 +13,26 @@ const NewComment = ({setComments}) => {
     setComment({ ...comment, [e.target.name]: e.target.value });
   };
 
-  const postCommentHandler = () => {
-    axios
-      .post("http://localhost:3001/comments", {
+  // const postCommentHandler = () => {
+  //   axios
+  //     .post("http://localhost:3001/comments", {
+  //       ...comment,
+  //       postId: 10,
+  //     })
+  //     .then((res) => axios.get("http://localhost:3001/comments"))
+  //     .then((res) => setComments(res.data))
+  //     .catch();
+  // };
+
+  const postCommentHandler = async () => {
+    try {
+      await axios.post("http://localhost:3001/comments", {
         ...comment,
         postId: 10,
-      })
-      .then((res) => axios.get("http://localhost:3001/comments"))
-      .then((res) => setComments(res.data))
-      .catch();
+      });
+      const { data } = await axios.get("http://localhost:3001/comments");
+      setComments(data);
+    } catch (error) {}
   };
 
   return (
