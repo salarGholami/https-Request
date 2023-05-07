@@ -1,14 +1,14 @@
 import { useEffect, useState } from "react";
 import style from "./fullComment.module.css";
-import axios from "axios";
+import http from "../../services/httpService";
 
 const FullComment = ({ commentId, setComments, setSelectId }) => {
   const [comment, setComment] = useState(null);
 
   useEffect(() => {
     if (commentId) {
-      axios
-        .get(`http://localhost:3001/comments/${commentId}`)
+      http
+        .get(`/comments/${commentId}`)
         .then((res) => setComment(res.data))
         .catch();
     }
@@ -16,8 +16,8 @@ const FullComment = ({ commentId, setComments, setSelectId }) => {
 
   const deleteHandler = async () => {
     try {
-      await axios.delete(`http://localhost:3001/comments/${commentId}`);
-      const { data } = await axios.get("http://localhost:3001/comments");
+      await http.delete(`/comments/${commentId}`);
+      const { data } = await http.get("/comments");
       setComments(data);
       setSelectId(null);
       setComment(null);

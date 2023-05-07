@@ -1,6 +1,7 @@
 import { useState } from "react";
 import style from "./newComment.module.css";
-import axios from "axios";
+import http from "../../services/httpService";
+
 
 const NewComment = ({ setComments }) => {
   const [comment, setComment] = useState({
@@ -13,24 +14,13 @@ const NewComment = ({ setComments }) => {
     setComment({ ...comment, [e.target.name]: e.target.value });
   };
 
-  // const postCommentHandler = () => {
-  //   axios
-  //     .post("http://localhost:3001/comments", {
-  //       ...comment,
-  //       postId: 10,
-  //     })
-  //     .then((res) => axios.get("http://localhost:3001/comments"))
-  //     .then((res) => setComments(res.data))
-  //     .catch();
-  // };
-
   const postCommentHandler = async () => {
     try {
-      await axios.post("http://localhost:3001/comments", {
+      await http.post("/comments", {
         ...comment,
         postId: 10,
       });
-      const { data } = await axios.get("http://localhost:3001/comments");
+      const { data } = await http.get("/comments");
       setComments(data);
     } catch (error) {}
   };

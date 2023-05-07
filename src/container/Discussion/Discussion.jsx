@@ -3,7 +3,7 @@ import Comment from "../../component/Comment/Comment";
 import FullComment from "../../component/FullComment/FullComment";
 import NewComment from "../../component/NewComment/NewComment";
 import style from "./discussion.module.css";
-import axios from "axios";
+import http from "../../services/httpService";
 import { useState } from "react";
 import { toast } from "react-toastify";
 
@@ -15,7 +15,7 @@ const Discussion = () => {
   useEffect(() => {
     const getComment = async () => {
       try {
-        const { data } = await axios.get("http://localhost:3001/comments");
+        const { data } = await http.get("/comments");
         setComments(data);
       } catch (error) {
         setError(true);
@@ -55,7 +55,11 @@ const Discussion = () => {
     <main>
       <section className={style.section}>{renderComments()}</section>
       <section className={style.section}>
-        <FullComment commentId={selectId} setComments={setComments} setSelectId={setSelectId}/>
+        <FullComment
+          commentId={selectId}
+          setComments={setComments}
+          setSelectId={setSelectId}
+        />
       </section>
       <section className={style.section}>
         <NewComment setComments={setComments} />
