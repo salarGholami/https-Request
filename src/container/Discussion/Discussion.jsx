@@ -3,19 +3,19 @@ import Comment from "../../component/Comment/Comment";
 import FullComment from "../../component/FullComment/FullComment";
 import NewComment from "../../component/NewComment/NewComment";
 import style from "./discussion.module.css";
-import http from "../../services/httpService";
 import { useState } from "react";
 import { toast } from "react-toastify";
+import { getAllComemnts } from "../../services/getAllCommentsServices";
 
 const Discussion = () => {
   const [comments, setComments] = useState(null);
   const [selectId, setSelectId] = useState(null);
   const [error, setError] = useState(false);
-
+ 
   useEffect(() => {
     const getComment = async () => {
       try {
-        const { data } = await http.get("/comments");
+        const { data } = await getAllComemnts();
         setComments(data);
       } catch (error) {
         setError(true);
