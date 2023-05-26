@@ -1,13 +1,21 @@
 import "./App.css";
-import Discussion from "./container/Discussion/Discussion";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { Route, Routes } from "react-router-dom";
+import Layout from "./Layout/Layout";
+import routers from "./Router";
 
 function App() {
   return (
     <div className="App">
       <ToastContainer />
-      <Discussion />
+      <Layout>
+        <Routes>
+          {routers.map((route, indedx) => (
+            <Route {...route} key={indedx} />
+          ))}
+        </Routes>
+      </Layout>
     </div>
   );
 }

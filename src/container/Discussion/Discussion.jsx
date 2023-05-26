@@ -54,7 +54,7 @@ const Discussion = () => {
   return (
     <main>
       <section className={style.section}>{renderComments()}</section>
-      <section className={style.section}>
+      {/* <section className={style.section}>
         <FullComment
           commentId={selectId}
           setComments={setComments}
@@ -63,7 +63,7 @@ const Discussion = () => {
       </section>
       <section className={style.section}>
         <NewComment setComments={setComments} />
-      </section>
+      </section> */}
     </main>
   );
 };
