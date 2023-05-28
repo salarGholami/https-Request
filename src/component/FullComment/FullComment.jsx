@@ -3,9 +3,13 @@ import style from "./fullComment.module.css";
 import { getAllComemnts } from "../../services/getAllCommentsServices";
 import { deleteComment } from "../../services/deleteCommentServices";
 import { getOneComment } from "../../services/getOneCommentServices";
+import { useParams } from "react-router-dom";
 
-const FullComment = ({ commentId, setComments, setSelectId }) => {
+const FullComment = ({ setComments, setSelectId }) => {
   const [comment, setComment] = useState(null);
+
+  const params = useParams();
+  const commentId = params.id;
 
   useEffect(() => {
     if (commentId) {

@@ -1,17 +1,16 @@
 import { useEffect } from "react";
 import Comment from "../../component/Comment/Comment";
-import FullComment from "../../component/FullComment/FullComment";
-import NewComment from "../../component/NewComment/NewComment";
 import style from "./discussion.module.css";
 import { useState } from "react";
 import { toast } from "react-toastify";
 import { getAllComemnts } from "../../services/getAllCommentsServices";
+import { Link } from "react-router-dom";
 
 const Discussion = () => {
   const [comments, setComments] = useState(null);
   const [selectId, setSelectId] = useState(null);
   const [error, setError] = useState(false);
- 
+
   useEffect(() => {
     const getComment = async () => {
       try {
@@ -38,13 +37,15 @@ const Discussion = () => {
 
     if (comments && !error) {
       renderValue = comments.map((c) => (
-        <Comment
-          key={c.id}
-          name={c.name}
-          email={c.email}
-          body={c.body}
-          onClick={() => seletCommentHandler(c.id)}
-        />
+        <Link to={`/comment/${c.id}`} key={c.id}>
+          <Comment
+            key={c.id}
+            name={c.name}
+            email={c.email}
+            body={c.body}
+            onClick={() => seletCommentHandler(c.id)}
+          />
+        </Link>
       ));
     }
 
@@ -54,16 +55,6 @@ const Discussion = () => {
   return (
     <main>
       <section className={style.section}>{renderComments()}</section>
-      {/* <section className={style.section}>
-        <FullComment
-          commentId={selectId}
-          setComments={setComments}
-          setSelectId={setSelectId}
-        />
-      </section>
-      <section className={style.section}>
-        <NewComment setComments={setComments} />
-      </section> */}
     </main>
   );
 };
