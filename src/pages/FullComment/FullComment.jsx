@@ -1,15 +1,15 @@
 import { useEffect, useState } from "react";
 import style from "./fullComment.module.css";
-import { getAllComemnts } from "../../services/getAllCommentsServices";
 import { deleteComment } from "../../services/deleteCommentServices";
 import { getOneComment } from "../../services/getOneCommentServices";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
-const FullComment = ({ setComments, setSelectId }) => {
+const FullComment = () => {
   const [comment, setComment] = useState(null);
 
   const params = useParams();
   const commentId = params.id;
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (commentId) {
@@ -22,9 +22,7 @@ const FullComment = ({ setComments, setSelectId }) => {
   const deleteHandler = async () => {
     try {
       await deleteComment(commentId);
-      const { data } = await getAllComemnts();
-      setComments(data);
-      setSelectId(null);
+      navigate("/");
       setComment(null);
     } catch (error) {}
   };

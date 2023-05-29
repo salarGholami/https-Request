@@ -1,14 +1,13 @@
 import { useEffect } from "react";
-import Comment from "../../component/Comment/Comment";
-import style from "./discussion.module.css";
+import Comment from "./Comment/Comment";
+import style from "./comments.module.css";
 import { useState } from "react";
 import { toast } from "react-toastify";
 import { getAllComemnts } from "../../services/getAllCommentsServices";
 import { Link } from "react-router-dom";
 
-const Discussion = () => {
+const CommentsList = () => {
   const [comments, setComments] = useState(null);
-  const [selectId, setSelectId] = useState(null);
   const [error, setError] = useState(false);
 
   useEffect(() => {
@@ -23,10 +22,6 @@ const Discussion = () => {
     getComment();
   }, []);
 
-  const seletCommentHandler = (id) => {
-    setSelectId(id);
-  };
-
   const renderComments = () => {
     let renderValue = <p>Loading....</p>;
 
@@ -38,13 +33,7 @@ const Discussion = () => {
     if (comments && !error) {
       renderValue = comments.map((c) => (
         <Link to={`/comment/${c.id}`} key={c.id}>
-          <Comment
-            key={c.id}
-            name={c.name}
-            email={c.email}
-            body={c.body}
-            onClick={() => seletCommentHandler(c.id)}
-          />
+          <Comment name={c.name} email={c.email} />
         </Link>
       ));
     }
@@ -52,11 +41,7 @@ const Discussion = () => {
     return renderValue;
   };
 
-  return (
-    <main>
-      <section className={style.section}>{renderComments()}</section>
-    </main>
-  );
+  return <section className={style.section}>{renderComments()}</section>;
 };
 
-export default Discussion;
+export default CommentsList;
